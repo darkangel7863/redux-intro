@@ -14,12 +14,14 @@ function AccountOperations() {
     loan: currentLoan,
     loanPurpose: currentLoanPurpose,
     balance,
+    isLoading,
   } = useSelector(store => store.account);
 
   function handleDeposit() {
     if (!depositAmount) return;
-    dispatch(deposit(depositAmount));
+    dispatch(deposit(depositAmount, currency));
     setDepositAmount('');
+    setCurrency('USD');
   }
 
   function handleWithdrawal() {
@@ -48,7 +50,7 @@ function AccountOperations() {
           <input
             type="number"
             value={depositAmount}
-            onChange={e => setDepositAmount(+e.target.value)}
+            onChange={e => setDepositAmount(e.target.value)}
           />
           <select value={currency} onChange={e => setCurrency(e.target.value)}>
             <option value="USD">US Dollar</option>
@@ -56,7 +58,9 @@ function AccountOperations() {
             <option value="GBP">British Pound</option>
           </select>
 
-          <button onClick={handleDeposit}>Deposit {depositAmount}</button>
+          <button onClick={handleDeposit} disabled={isLoading}>
+            {isLoading ? 'Converting... ' : `Deposit ${depositAmount}`}
+          </button>
         </div>
 
         <div>
@@ -64,7 +68,7 @@ function AccountOperations() {
           <input
             type="number"
             value={withdrawalAmount}
-            onChange={e => setWithdrawalAmount(+e.target.value)}
+            onChange={e => setWithdrawalAmount(e.target.value)}
           />
           <button onClick={handleWithdrawal}>
             Withdraw {withdrawalAmount}
@@ -76,7 +80,7 @@ function AccountOperations() {
           <input
             type="number"
             value={loanAmount}
-            onChange={e => setLoanAmount(+e.target.value)}
+            onChange={e => setLoanAmount(e.target.value)}
             placeholder="Loan amount"
           />
           <input
