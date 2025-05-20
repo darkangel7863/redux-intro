@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import React from 'react';
 function formatCurrency(value) {
   return new Intl.NumberFormat('en', {
     style: 'currency',
