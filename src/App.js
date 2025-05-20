@@ -10,7 +10,15 @@ function App() {
   const fullName = useSelector(store => store.customer.fullName);
   return (
     <div>
-      <h1>🏦 The React-Redux Bank ⚛️</h1>
+      <h1>
+        <span role="img" aria-label="logo">
+          🏦
+        </span>{' '}
+        The React-Redux Bank
+        <span role="img" aria-label="logo">
+          ⚛️
+        </span>
+      </h1>
       {fullName === '' ? (
         <CreateCustomer />
       ) : (
